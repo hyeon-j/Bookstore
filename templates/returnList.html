@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% block head %}
+<title>HJ Book Store</title>
+{% endblock %}
+
+
+
+{% block body %}
+
+<br/><br/>
+
+{% for e in returnList %}
+<div style="border-style: solid;">
+    {{ e }}
+</div>
+
+<br/><br/>
+{% endfor %}
+
+{% endblock %}

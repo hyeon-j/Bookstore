@@ -1,0 +1,66 @@
+{% extends 'base.html' %}
+
+{% block head %}
+<title>HJ Book Store</title>
+{% endblock %}
+
+
+
+{% block body %}
+
+<br/>
+<br/>
+<div style="border-style: solid;">
+    <a href="{{ url_for('home', userID = userID, manager = manager) }}">Home</a>
+    <a href="{{ url_for('cart', userID = userID, manager = manager) }}">Cart</a>
+    <a href="{{ url_for('wishlist', userID = userID, manager = manager) }}">Wishlist</a>
+    <a href="{{ url_for('pastOrders', userID = userID, manager = manager) }}">Purchase History</a>
+    {% if manager > 0 %}
+    <a href="{{ url_for('managerTab', userID = userID, manager = manager) }}">Manager Tab</a>
+    {% endif %}
+</div>
+
+<br/>
+<br/>
+
+<form action="/search/{{ userID }}/{{ manager }}" method="POST">
+    <div>
+        <input type="text" name="author" id="search" placeholder="Author">
+
+        <br/><br/>
+        
+        <input type="text" name="publisher" id="search" placeholder="Publisher">
+        
+        <br/><br/>
+        
+        <input type="text" name="title" id="search" placeholder="Title">
+        
+        <br/><br/>
+        
+        <label>Language:</label>
+        <input type="radio" name="language" value="english">
+        <label>English</label>
+        <input type="radio" name="language" value="french">
+        <label>French</label>
+        <input type="radio" name="language" value="spanish">
+        <label>Spanish</label>
+
+        <br/><br/>
+        
+        <label>Order By:</label>
+        <input type="radio" name="order" value="date">
+        <label>Date</label>
+        <input type="radio" name="order" value="rating">
+        <label>Overall Rating</label>
+        <input type="radio" name="order" value="trust_rating">
+        <label>Rating of Trusted</label>
+
+        <br/><br/>
+
+        <input type="submit" value="search">
+    </div>
+    
+</form>
+
+    
+{% endblock %}

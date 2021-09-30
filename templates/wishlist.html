@@ -1,0 +1,55 @@
+{% extends 'base.html' %}
+
+{% block head %}
+<title>HJ Book Store</title>
+{% endblock %}
+
+{% block body %}
+
+<br/><br/>
+
+<div style="border-style: solid;">
+    <a href="{{ url_for('home', userID = userID, manager = manager) }}">Home</a>
+    <a href="{{ url_for('cart', userID = userID, manager = manager) }}">Cart</a>
+    <a href="{{ url_for('wishlist', userID = userID, manager = manager) }}">Wishlist</a>
+    <a href="{{ url_for('pastOrders', userID = userID, manager = manager) }}">Purchase History</a>
+    {% if manager > 0 %}
+    <a href="{{ url_for('managerTab', userID = userID, manager = manager) }}">Manager Tab</a>
+    {% endif %}
+</div>
+
+<br/>
+
+{% if books %}
+
+    <br/>
+
+    <div>
+        <p>Your Wishlist:</p>
+
+        <br/>
+
+        {% for book in books %}
+        <div style="border-style: solid;">
+            <p>bookID: {{ book[0] }}</p>
+            <a href="{{ url_for('book', userID = userID, bookID = book[0], manager = manager) }}">Title: {{ book[1] }}</a>
+            <p>Author: {{ book[2] }}</p>
+            <p>Average Rating: {{ book[3] }}</p>
+            <p>ISBN: {{ book[4] }}</p>
+            <p>ISBN13: {{ book[5] }}</p>
+            <p>Language: {{ book[6] }}</p>
+            <p>Date: {{ book[10] }}</p>
+            <p>Publisher: {{ book[11] }}</p>
+        </div>
+        {% endfor %}
+
+        <br/>
+
+    </div>
+
+    <br/>
+
+{% else %}
+    <p>Empty Cart</p>
+{% endif %}
+{% endblock %}

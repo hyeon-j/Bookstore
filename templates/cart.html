@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+
+{% block head %}
+<title>HJ Book Store</title>
+{% endblock %}
+
+
+{% block body %}
+
+<br/><br/>
+
+<div style="border-style: solid;">
+    <a href="{{ url_for('home', userID = userID, manager = manager) }}">Home</a>
+    <a href="{{ url_for('cart', userID = userID, manager = manager) }}">Cart</a>
+    <a href="{{ url_for('wishlist', userID = userID, manager = manager) }}">Wishlist</a>
+    <a href="{{ url_for('pastOrders', userID = userID, manager = manager) }}">Purchase History</a>
+    {% if manager > 0 %}
+    <a href="{{ url_for('managerTab', userID = userID, manager = manager) }}">Manager Tab</a>
+    {% endif %}
+</div>
+
+<br/><hr/><br/>
+
+<p>Your Cart:</p>
+
+{% if cart %}
+    {% for book_count in book_counts %}
+
+    <a href="{{ url_for('book', userID = userID, bookID = book_count[0][0], manager = manager) }}">Title: {{ book_count[0][1] }}</a>
+    <p>Count: {{ book_count[1] }}</p>
+
+    <br/><hr/><br/>
+
+    {% endfor %}
+
+    <a href="{{ url_for('order', userID = userID, manager = manager) }}">Order</a>
+
+
+{% else %}
+<p>Empty.</p>
+{% endif %}
+
+
+{% endblock %}

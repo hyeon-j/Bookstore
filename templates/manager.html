@@ -1,0 +1,129 @@
+{% extends 'base.html' %}
+
+{% block head %}
+<title>HJ Book Store</title>
+{% endblock %}
+
+
+
+{% block body %}
+
+<br/><br/>
+
+<div style="border-style: solid;">
+    <a href="{{ url_for('home', userID = userID, manager = manager) }}">Home</a>
+    <a href="{{ url_for('cart', userID = userID, manager = manager) }}">Cart</a>
+    <a href="{{ url_for('wishlist', userID = userID, manager = manager) }}">Wishlist</a>
+    <a href="{{ url_for('pastOrders', userID = userID, manager = manager) }}">Purchase History</a>
+    {% if manager > 0 %}
+    <a href="{{ url_for('managerTab', userID = userID, manager = manager) }}">Manager Tab</a>
+    {% endif %}
+</div>
+
+<br/><hr/><br/>
+
+<form action="/makeManager/{{ userID }}/{{ manager }}" method="POST">
+    <label>Enter Username of the user you want to make manager: </label>
+    <input type="text" name="username" id="username" placeholder="Username of user" required>
+    <button type="submit">Submit</button>
+</form>
+
+<br/><hr/><br/>
+
+<form action="/addBook/{{ userID }}/{{ manager }}" method="POST">
+    <label>Title:</label>
+    <input type="text" name="title" id="title" placeholder="Title of Book" required>
+    
+    <br/><br/>
+
+
+    <label>Author(s):</label>
+    <input type="text" name="author" id="author" placeholder="Author(s) of Book" required>
+
+    <br/><br/>
+
+    <label>ISBN:</label>
+    <input type="text" name="isbn" id="isbn" placeholder="ISBN of Book" required>
+
+    <br/><br/>
+
+    <label>ISBN13:</label>
+    <input type="text" name="isbn13" id="isbn13" placeholder="ISBN13 of Book" required>
+
+    <br/><br/>
+
+    <label>Language code:</label>
+    <input type="text" name="lang" id="lang" placeholder="Language Code of Book" required>
+
+    <br/><br/>
+
+    <label>Number of Pages:</label>
+    <input type="text" name="num_pages" id="num_pages" placeholder="Number of Pages of Book" required>
+
+    <br/><br/>
+
+    <label>Publication Date:</label>
+    <input type="text" name="publication_date" id="publication_date" placeholder="Publication Date of Book" required>
+
+    <br/><br/>
+
+    <label>Publisher:</label>
+    <input type="text" name="publisher" id="publisher" placeholder="Publisher of Book" required>
+
+    <br/><br/>
+
+    <label>Price:</label>
+    <input type="text" name="price" id="price" placeholder="Price of Book" required>
+
+    <br/><br/>
+
+    <label>Stock Level:</label>
+    <input type="text" name="stock" id="stock" placeholder="Stock Level of Book" required>
+
+    <br/><br/>
+
+    <button type="submit">Submit</button>
+</form>
+
+<br/><hr/><br/>
+
+<form action="/changeStock/{{ userID }}/{{ manager }}" method="POST">
+    <label>ID of the Book to change stock:</label>
+    <input type="text" name="bookID" id="bookID" placeholder="Book ID" required>
+    <label>Stock Level:</label>
+    <input type="number" name="stock" id="stock" placeholder="Stock Level of Book" required>
+    <button type="submit">Submit</button>
+</form>
+
+<br/><hr/><br/>
+
+<form action="/bookStats/{{ userID }}/{{ manager }}" method="POST">
+
+    <input type="radio" name="choice" value="book" required>
+    <label>Books:</label>
+    <input type="radio" name="choice" value="author">
+    <label>Author:</label>
+    <input type="radio" name="choice" value="publisher">
+    <label>Publisher</label>
+
+    <label>Count:</label>
+    <input type="number" name="count" id="count" placeholder="1~10" min="1" max='10' required>
+
+    <button type="submit">Submit</button>
+</form>
+
+<br/><hr/><br/>
+
+<form action="/mostUsers/{{ userID }}/{{ manager }}" method="POST">
+    <input type="radio" name="choice" value="trust" required>
+    <label>Most Trusted Users:</label>
+    <input type="radio" name="choice" value="useful">
+    <label>Most Useful Users:</label>
+
+    <label>Count:</label>
+    <input type="number" name="count" id="count" placeholder="1~10" min="1" max='10' required>
+
+    <button type="submit">Submit</button>
+</form>
+
+{% endblock %}

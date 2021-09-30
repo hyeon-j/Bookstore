@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+
+{% block head %}
+<title>HJ Book Store Login</title>
+{% endblock %}
+
+
+
+{% block body %}
+
+    <br/>
+    <br/>
+    <br/>
+
+    <div>
+        <form action="/login" method="POST">
+            <div>
+                <input type="text" name="username" id="username" placeholder="Username">
+
+                <br/><br/>
+
+                <input type="password" name="password" id="password" placeholder="Password">
+
+                <br/><br/>
+
+                <input type="submit" value="Login">
+            </div>
+            
+        </form>
+    </div>
+
+    <br/>
+
+    <a href="/register">Register</a>
+    
+{% endblock %}

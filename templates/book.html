@@ -1,0 +1,131 @@
+{% extends 'base.html' %}
+
+{% block head %}
+<title>HJ Book Store</title>
+{% endblock %}
+
+
+
+{% block body %}
+
+<br/><br/>
+
+<div style="border-style: solid;">
+    <a href="{{ url_for('home', userID = userID, manager = manager) }}">Home</a>
+    <a href="{{ url_for('cart', userID = userID, manager = manager) }}">Cart</a>
+    <a href="{{ url_for('wishlist', userID = userID, manager = manager) }}">Wishlist</a>
+    <a href="{{ url_for('pastOrders', userID = userID, manager = manager) }}">Purchase History</a>
+    {% if manager > 0 %}
+    <a href="{{ url_for('managerTab', userID = userID, manager = manager) }}">Manager Tab</a>
+    {% endif %}
+</div>
+
+<br/>
+
+<div style="border-style: solid;">
+    <p>bookID: {{ book[0] }}</p>
+    <p>Title: {{ book[1] }}</p>
+    <p>Author: {{ book[2] }}</p>
+    <p>Average Rating: {{ book[3] }}</p>
+    <p>ISBN: {{ book[4] }}</p>
+    <p>ISBN13: {{ book[5] }}</p>
+    <p>Language: {{ book[6] }}</p>
+    <p>Date: {{ book[10] }}</p>
+    <p>Publisher: {{ book[11] }}</p>
+</div>
+
+<br/><hr/><br/>
+
+<p>Author Description:</p>
+{% if description %}
+<p>{{ description }}</p>
+{% else %}
+<p>No Author Description.</p>
+{% endif %}
+
+<br/><hr/><br/>
+
+<p>Book Overview:</p>
+{% if overview %}
+<p>{{ overview }}</p>
+{% else %}
+<p>No Book Overview</p>
+{% endif %}
+
+<br/><hr/><br/>
+
+{% if AddedToWishlist %}
+    <p>Successfully added to Wishlist</p>
+{% else %}
+    <form action="/addToWishlist/{{ userID }}/{{ book[0] }}/{{ manager }}" method="POST">
+        <button type="submit">Add to Wishlist</button>
+    </form>
+{% endif %}
+
+<br/><hr/><br/>
+
+{% if AddedToCart %}
+    <p>Successfully added to Cart</p>
+{% else %}
+    <form action="/addToCart/{{ userID }}/{{ book[0] }}/{{ manager }}" method="POST">
+        <label>Count: </label>
+        <input type="number" name="count" id="count" placeholder="Number of Copies" min="1" required>
+
+        <br/><br/>
+
+        <button type="submit">Add to Cart</button>
+    </form>
+{% endif %}
+
+<br/><hr/>
+
+<p>Comments:</p>
+
+{% if comments %}
+
+    <form action="/topNComments/{{ userID }}/{{ book[0] }}/{{ manager }}" method="POST">
+        <label>Top Comments: </label>
+        <input type="number" name="numOfComments" id="numOfComments" placeholder="1~10" min="1" max='10' required>
+
+        <br/><br/>
+
+        <button type="submit">Get Top Comments</button>
+    </form>
+
+    <br/>
+
+
+    {% for comment in comments %}
+        <div style="border-style: solid;">
+            <p>Username: {{ comment[1][0] }}</p>
+            <p>Rating: {{ comment[0][3] }}</p>
+            <p>Text: {{ comment[0][4] }}</p>
+            <p>User's Average Rating: {{ comment[0][5] }}</p>
+            <p>Date: {{ comment[0][6] }}</p>
+
+            <form action="/rateComment/{{ userID }}/{{ comment[0][0] }}/{{ book[0] }}/{{ manager }}" method="POST">
+                <label>Rate this Comment: </label>
+                <input type="number" name="score" id="score" placeholder="0~5" min="0" max="5" required>
+                <button type="submit">Submit</button>
+            </form>
+
+            <br/>
+
+            <form action="/trust/{{ userID }}/{{ comment[0][2] }}/{{ book[0] }}/{{ manager }}" method="POST">
+                <button type="submit">Trust this User</button>
+            </form>
+
+            <br/>
+        </div>
+
+        <br/>
+
+    {% endfor %}
+{% else %}
+    <p>No Comments.</p>
+{% endif %}
+
+
+
+    
+{% endblock %}
